@@ -15,8 +15,9 @@
 		<selenium.version>3.141.59</selenium.version>
 		<testNG.version>6.8</testNG.version>
 		<extentreport.version>3.1.5</extentreport.version>
-		<log4j.version>2.11.1</log4j.version>
+		<log4j.version>1.2.17</log4j.version>
 		<mavencompiler.version>3.7.0</mavencompiler.version>
+
 	</properties>
 
 	<build>
@@ -93,15 +94,9 @@
 			<artifactId>poi-ooxml-schemas</artifactId>
 			<version>3.6</version>
 		</dependency>
-		<!-- Dependency for Log4j2 -->
 		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-api</artifactId>
-			<version>${log4j.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
 			<version>${log4j.version}</version>
 		</dependency>
 	</dependencies>

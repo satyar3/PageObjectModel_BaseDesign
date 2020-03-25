@@ -1,0 +1,25 @@
+2020-03-25 16:39:56,640 INFO  [Thread16] Starting @Class : com.qa.demo.tests.GoogleTest @TestCase : DefaultTest
+2020-03-25 16:39:56,640 INFO  [Thread16] ***************************Test Started******************************
+2020-03-25 16:39:56,707 ERROR [Thread16] Unable to fill in : By.name: q1
+2020-03-25 16:39:57,834 ERROR [Thread16] Unable to click on : By.cssSelector: .erkvQe li:first-child span
+2020-03-25 16:39:58,434 ERROR [Thread16] Assertion Failed in VerifyTest 1 in method : verifyTest1 of Class : com.qa.demo.pages.GooglePage at Line : 45
+2020-03-25 16:39:58,438 INFO  [Thread16] https://www.google.com/
+2020-03-25 16:39:58,441 ERROR [Thread16] Failed @Class : com.qa.demo.tests.GoogleTest @TestCase : DefaultTest
+2020-03-25 16:39:58,442 ERROR [Thread16] ***************************Test Failed******************************
+2020-03-25 16:39:54,778 INFO  [Thread17] Starting @Class : com.qa.demo.tests.YahooTest @TestCase : YahooTest
+2020-03-25 16:39:54,778 INFO  [Thread17] ***************************Test Started******************************
+2020-03-25 16:40:06,448 INFO  [Thread17] Filled in : By.cssSelector: #header-search-form #header-search-input
+2020-03-25 16:40:08,474 INFO  [Thread17] Clicked on : By.cssSelector: [role='listbox'] li:first-child
+2020-03-25 16:40:08,474 INFO  [Thread17] Assertion Passed in VerifyTest 2
+2020-03-25 16:40:08,479 INFO  [Thread17] https://in.search.yahoo.com/search?p=software+testing&fr=yfp-t-s&fp=1&toggle=1&cop=mss&ei=UTF-8
+2020-03-25 16:40:08,479 INFO  [Thread17] Success @Class : com.qa.demo.tests.YahooTest @TestCase : YahooTest
+2020-03-25 16:40:08,480 INFO  [Thread17] ***************************Test Passed******************************
+2020-03-25 16:39:54,195 INFO  [Thread18] Starting @Class : com.qa.demo.tests.FBTest @TestCase : FBTest
+2020-03-25 16:39:54,199 INFO  [Thread18] ***************************Test Started******************************
+2020-03-25 16:40:01,388 INFO  [Thread18] Filled in : By.cssSelector: [data-testid='royal_email']
+2020-03-25 16:40:01,712 ERROR [Thread18] Unable to click on : By.cssSelector: #loginbutton2
+2020-03-25 16:40:02,023 INFO  [Thread18] Assertion Passed in VerifyTest 3
+2020-03-25 16:40:02,023 INFO  [Thread18] Assertion Passed in VerifyTest 3
+2020-03-25 16:40:02,029 INFO  [Thread18] https://www.facebook.com/
+2020-03-25 16:40:02,031 ERROR [Thread18] Failed @Class : com.qa.demo.tests.FBTest @TestCase : FBTest
+2020-03-25 16:40:02,032 ERROR [Thread18] ***************************Test Failed******************************

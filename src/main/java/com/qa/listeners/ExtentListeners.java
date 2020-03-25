@@ -5,6 +5,11 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
 
+import org.apache.log4j.FileAppender;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PatternLayout;
+import org.apache.log4j.PropertyConfigurator;
+import org.apache.log4j.SimpleLayout;
 import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;
 import org.testng.ITestContext;
@@ -25,31 +30,39 @@ public class ExtentListeners implements ITestListener, IInvokedMethodListener
 {
 
 	static Date d = new Date();
-	static String fileName = "Extent.html";
+	static String fileName = "ExtentReport.html";
 	//static String fileName = "Extent_" + d.toString().replace(":", "_").replace(" ", "_") + ".html";
-	
-	public static SoftAssert softAssert;
-			
+
+	public static ThreadLocal<SoftAssert> softAssert = new ThreadLocal<SoftAssert>();
+
 	public static boolean STATUS_PASS = true;
 	public static boolean STATUS_FAIL = false;
-	public static boolean STATUS_ASSERTION_FAIL = false;
-	public static String className = "";
+	//public static boolean STATUS_ASSERTION_FAIL = false;
+	public static ThreadLocal<Boolean> STATUS_ASSERTION_FAIL = new ThreadLocal<Boolean>();
+	public static ThreadLocal<String> className = new ThreadLocal<String>();
 	public static String testName = "";
-	
+	public String testId = "";
 	public Object testClass = new Object();
-	
-	File newFolder = new File(System.getProperty("user.dir") + "\\reports\\");
-    boolean created =  newFolder.mkdir();
 
-	private static ExtentReports extent = ExtentManager.createInstance(System.getProperty("user.dir") + "\\reports\\" + fileName);
+	File newReportFolder = new File(System.getProperty("user.dir") + "\\reports\\");
+	boolean createdReportFolder = newReportFolder.mkdir();
+
+	File newLogFolder = new File(System.getProperty("user.dir") + "\\logs\\");
+	boolean createdLOgFolder = newLogFolder.mkdir();
+
+	private static ExtentReports extent = ExtentManager
+			.createInstance(System.getProperty("user.dir") + "\\reports\\" + fileName);
 	public static ThreadLocal<ExtentTest> testReport = new ThreadLocal<ExtentTest>();
 
 	public void onTestStart(ITestResult result)
 	{
-		ExtentTest test = extent.createTest(result.getTestClass().getName() + "     @TestCase : " + result.getMethod().getMethodName());
+
+		ExtentTest test = extent
+				.createTest(result.getTestClass().getName() + "     @TestCase : " + result.getMethod().getMethodName());
 		testReport.set(test);
-		LogUtils.log.info("Starting @Class : "+result.getTestClass().getName()+" @TestCase : " + result.getMethod().getMethodName());
-		LogUtils.log.info("***************************Test Started******************************");
+		LogUtils.log.get().info("Starting @Class : " + result.getTestClass().getName() + " @TestCase : "
+				+ result.getMethod().getMethodName());
+		LogUtils.log.get().info("***************************Test Started******************************");
 	}
 
 	public void onTestSuccess(ITestResult result)
@@ -58,13 +71,14 @@ public class ExtentListeners implements ITestListener, IInvokedMethodListener
 		String logText = "<b>" + "TEST CASE:- " + methodName.toUpperCase() + " PASSED" + "</b>";
 		Markup m = MarkupHelper.createLabel(logText, ExtentColor.GREEN);
 		testReport.get().pass(m);
-		LogUtils.log.info("Success @Class : "+result.getTestClass().getName()+" @TestCase : " + result.getMethod().getMethodName());
-		LogUtils.log.info("***************************Test Passed******************************");
+		LogUtils.log.get().info("Success @Class : " + result.getTestClass().getName() + " @TestCase : "
+				+ result.getMethod().getMethodName());
+		LogUtils.log.get().info("***************************Test Passed******************************");
 	}
 
 	public void onTestFailure(ITestResult result)
 	{
-		if(!STATUS_ASSERTION_FAIL)
+		if (!STATUS_ASSERTION_FAIL.get())
 		{
 			testReport.get().log(Status.FAIL, result.getThrowable().getClass().getSimpleName());
 			//String excepionMessage = ExceptionUtil.getStackTrace(result.getThrowable());
@@ -75,21 +89,13 @@ public class ExtentListeners implements ITestListener, IInvokedMethodListener
 							+ "</details>" + " \n");
 			//testReport.get().log(Status.FAIL, result.getThrowable());
 		}
-		/*try
-		{
-			ExtentManager.captureScreenshot();
-			testReport.get().fail("<b>" + "<font color=" + "red>" + "Screenshot of failure" + "</font>" + "</b>", MediaEntityBuilder.createScreenCaptureFromPath(ExtentManager.screenshotName).build());
-		}
-		catch (IOException e)
-		{
-
-		}*/
 
 		String failureLogg = "TEST CASE FAILED";
 		Markup m = MarkupHelper.createLabel(failureLogg, ExtentColor.RED);
 		testReport.get().log(Status.FAIL, m);
-		LogUtils.log.error("Failed @Class : "+result.getTestClass().getName()+" @TestCase : " + result.getMethod().getMethodName());
-		LogUtils.log.error("***************************Test Failed******************************");
+		LogUtils.log.get().error("Failed @Class : " + result.getTestClass().getName() + " @TestCase : "
+				+ result.getMethod().getMethodName());
+		LogUtils.log.get().error("***************************Test Failed******************************");
 	}
 
 	public void onTestSkipped(ITestResult result)
@@ -98,8 +104,9 @@ public class ExtentListeners implements ITestListener, IInvokedMethodListener
 		String logText = "<b>" + "Test Case:- " + methodName + " Skipped" + "</b>";
 		Markup m = MarkupHelper.createLabel(logText, ExtentColor.YELLOW);
 		testReport.get().skip(m);
-		LogUtils.log.info("Skipped @Class : "+result.getTestClass().getName()+" @TestCase : " + result.getMethod().getMethodName());
-		LogUtils.log.error("***************************Test Skipped******************************");
+		LogUtils.log.get().info("Skipped @Class : " + result.getTestClass().getName() + " @TestCase : "
+				+ result.getMethod().getMethodName());
+		LogUtils.log.get().error("***************************Test Skipped******************************");
 	}
 
 	public void onTestFailedButWithinSuccessPercentage(ITestResult result)
@@ -109,7 +116,7 @@ public class ExtentListeners implements ITestListener, IInvokedMethodListener
 
 	public void onStart(ITestContext context)
 	{
-		
+
 	}
 
 	public void onFinish(ITestContext context)
@@ -122,50 +129,69 @@ public class ExtentListeners implements ITestListener, IInvokedMethodListener
 
 	public void beforeInvocation(IInvokedMethod method, ITestResult testResult)
 	{
-		if(method.getTestMethod().isTest())
+		//STATUS_ASSERTION_FAIL.set(false);
+		if (LogUtils.log.get() == null)
 		{
-			softAssert = new SoftAssert();
-			ExtentListeners.STATUS_ASSERTION_FAIL = false;
-			className =	testResult.getTestClass().getName();
-			testName = 	method.getTestMethod().getMethodName();
+			try
+			{
+				//freemarker.log.Logger.selectLoggerLibrary(freemarker.log.Logger.LIBRARY_NONE);
+				SimpleLayout layout = new SimpleLayout();
+				//String PATTERN = "%d [%p|%c|%C{1}] %m%n";
+				LogUtils.log.set(Logger
+						.getLogger(Thread.currentThread().getClass().getSimpleName() + Thread.currentThread().getId()));
+				FileAppender fileaAppender = new FileAppender(layout, "./logs/"
+						+ Thread.currentThread().getClass().getSimpleName() + Thread.currentThread().getId() + ".log",
+						false);
+				fileaAppender.setLayout(new PatternLayout("%d %-5p [%c{1}] %m%n"));
+				fileaAppender.setAppend(false);
+				fileaAppender.activateOptions();
+				LogUtils.log.get().addAppender(fileaAppender);
+				PropertyConfigurator.configure("src\\main\\resources\\log4j.properties");
+				//BasicConfigurator.configure();
+			} 
+			catch (IOException e)
+			{	
+				e.printStackTrace();
+			} 
+
+		}
+		if (method.getTestMethod().isTest())
+		{
+			softAssert.set(new SoftAssert());
+			ExtentListeners.STATUS_ASSERTION_FAIL.set(false);
+			className.set(testResult.getTestClass().getName());
+			testName = method.getTestMethod().getMethodName();
 			testClass = testResult.getInstance();
 		}
-		
 	}
 
 	public void afterInvocation(IInvokedMethod method, ITestResult testResult)
 	{
-		if(method.getTestMethod().isTest())
+		if (method.getTestMethod().isTest())
 		{
-			if(STATUS_ASSERTION_FAIL)
+			if (STATUS_ASSERTION_FAIL.get())
 			{
 				testResult.setStatus(ITestResult.FAILURE);
 				testResult.setThrowable(new Exception("Test failed because of incomplete action !!!"));
 			}
-			softAssert.assertAll();
+			softAssert.get().assertAll();
 		}
-		/*System.out.println(testResult.getMethod());
-		try {
-			softAssert.assertAll();
-		} catch (AssertionError e) {
-			testResult.setThrowable(e);
-			testResult.setStatus(ITestResult.FAILURE);
-		}*/
 	}
-	
+
 	public static void assertFail(String message)
 	{
 		ExtentListeners.insertScreenshotIntoReport();
-		softAssert.fail(message);
-		ExtentListeners.STATUS_ASSERTION_FAIL = true;
+		softAssert.get().fail(message);
+		ExtentListeners.STATUS_ASSERTION_FAIL.set(true);
 	}
-	
+
 	public static void insertScreenshotIntoReport()
-	{		
+	{
 		try
 		{
 			ExtentManager.captureScreenshot();
-			testReport.get().info("<b>" + "<font color=" + "red>" + "Screenshot :" + "</font>" + "</b>", MediaEntityBuilder.createScreenCaptureFromPath(ExtentManager.screenshotFullPath).build());
+			testReport.get().info("<b>" + "<font color=" + "red>" + "Screenshot :" + "</font>" + "</b>",
+					MediaEntityBuilder.createScreenCaptureFromPath(ExtentManager.screenshotFullPath.get()).build());
 		} catch (IOException e)
 		{
 			e.printStackTrace();

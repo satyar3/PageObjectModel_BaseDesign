@@ -10,9 +10,9 @@ import com.qa.drivermanager.DriverManager;
 
 public class WaitUtils
 {
-	
+
 	public static WebDriver driver = DriverManager.getDriver();
-	
+
 	public static boolean WaitForElementPresent(By elt, int timeOutInSeconds)
 	{
 		WebElement el;
@@ -20,18 +20,17 @@ public class WaitUtils
 		{
 			WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
 			el = wait.until(ExpectedConditions.presenceOfElementLocated(elt));
-		}
-		catch (Exception e) 
+		} catch (Exception e)
 		{
 			el = null;
 		}
-		
-		if(el != null)		
+
+		if (el != null)
 			return true;
 		else
 			return false;
 	}
-	
+
 	public static boolean WaitForElementVisible(By elt, int timeOutInSeconds)
 	{
 		WebElement el;
@@ -39,32 +38,30 @@ public class WaitUtils
 		{
 			WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
 			el = wait.until(ExpectedConditions.visibilityOfElementLocated(elt));
-		}
-		catch (Exception e) 
+		} catch (Exception e)
 		{
 			el = null;
 		}
-		
-		if(el != null)		
+
+		if (el != null)
 			return true;
 		else
 			return false;
 	}
-	
+
 	public static boolean WaitForElementVisible(WebElement elt, int timeOutInSeconds)
 	{
 		WebElement el;
 		try
-		{			
+		{
 			WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
 			el = wait.until(ExpectedConditions.visibilityOf(elt));
-		}
-		catch (Exception e) 
+		} catch (Exception e)
 		{
 			el = null;
 		}
-		
-		if(el != null)		
+
+		if (el != null)
 			return true;
 		else
 			return false;

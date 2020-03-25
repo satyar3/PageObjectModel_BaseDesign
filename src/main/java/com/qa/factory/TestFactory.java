@@ -13,8 +13,9 @@ public abstract class TestFactory
 	protected PageFactory pageFactory;
 
 	protected abstract String getPropertyFilePath();
+
 	protected abstract void setDriverPath();
-	
+
 	public String getProperty(String propKey)
 	{
 		return prop.getProperty(propKey);

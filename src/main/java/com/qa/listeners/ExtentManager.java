@@ -16,7 +16,6 @@ import com.aventstack.extentreports.reporter.configuration.Theme;
 import com.qa.drivermanager.DriverManager;
 import com.qa.factory.PageFactory;
 
-
 public class ExtentManager extends PageFactory
 {
 
@@ -49,7 +48,7 @@ public class ExtentManager extends PageFactory
 
 	public static String screenshotPath;
 	public static String screenshotName;
-	public static String screenshotFullPath;
+	public static ThreadLocal<String> screenshotFullPath = new ThreadLocal<String>();
 
 	public static void captureScreenshot()
 	{
@@ -58,13 +57,13 @@ public class ExtentManager extends PageFactory
 
 		Date d = new Date();
 		screenshotName = d.toString().replace(":", "_").replace(" ", "_") + ".png";
-		screenshotFullPath = System.getProperty("user.dir") + "\\Screenshots\\"+ExtentListeners.className+"\\"+"\\"+ExtentListeners.testName+"\\" + screenshotName;
+		screenshotFullPath.set(System.getProperty("user.dir") + "\\Screenshots\\" + ExtentListeners.className.get() + "\\"
+				+ "\\" + ExtentListeners.testName + "\\" + screenshotName);
 
 		try
 		{
-			FileUtils.copyFile(scrFile, new File(screenshotFullPath));
-		}
-		catch (IOException e)
+			FileUtils.copyFile(scrFile, new File(screenshotFullPath.get()));
+		} catch (IOException e)
 		{
 			e.printStackTrace();
 		}

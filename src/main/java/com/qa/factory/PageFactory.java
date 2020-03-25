@@ -10,12 +10,12 @@ public class PageFactory
 {
 	protected WebDriver driver;
 	protected static TestFactory seleniumTest = null;
-	
+
 	public PageFactory(WebDriver driver)
 	{
 		this.driver = driver;
 	}
-	
+
 	public <T extends DemoBasePage> T getPageObject(Class<T> cls)
 	{
 		try
@@ -25,13 +25,11 @@ public class PageFactory
 			page = org.openqa.selenium.support.PageFactory.initElements(driver, cls);
 			org.openqa.selenium.support.PageFactory.initElements(ajaxElemLocatorFactory, page);
 			return cls.getDeclaredConstructor(WebDriver.class).newInstance(this.driver);
-		} 
-		catch (Exception e)
+		} catch (Exception e)
 		{
-			//System.out.println("Unable to instansiate : "+cls+" class");
-			LogUtils.log.error("Unable to instansiate : "+cls+" class");
+			LogUtils.log.get().error("Unable to instansiate : " + cls + " class");
 			e.printStackTrace();
 			return null;
-		}		
+		}
 	}
 }
