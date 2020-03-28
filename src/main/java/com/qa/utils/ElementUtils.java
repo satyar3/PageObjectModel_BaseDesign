@@ -3,6 +3,7 @@ package com.qa.utils;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -22,12 +23,21 @@ public class ElementUtils extends PageFactory
 
 	public static void clickOrFail(By element, String failMessage)
 	{
+		ExtentListeners.insertScreenshotIntoReport();		
+		WebElement el = DriverManager.getDriver().findElement(element);
+		
 		try
-		{
-			ExtentListeners.insertScreenshotIntoReport();
-			DriverManager.getDriver().findElement(element).click();
+		{			
+			el.click();
 			LogUtils.reportPass("Clicked on : " + element.toString());
-		} catch (Exception e)
+		}
+		catch (StaleElementReferenceException e) 
+		{
+			StaleElementUtils.refreshElement(el);
+			LogUtils.log.get().info("Element got staled. Refreshing the element : " + element);
+			el.click();
+		}
+		catch (Exception e)
 		{
 			//System.out.println("Unable to click on : "+element);
 			LogUtils.log.get().error("Unable to click on : " + element);
@@ -40,12 +50,20 @@ public class ElementUtils extends PageFactory
 
 	public static void sendKeyOrFail(By element, String failMessage, String... textToBeFilled)
 	{
+		WebElement el = DriverManager.getDriver().findElement(element);
 		try
 		{
-			DriverManager.getDriver().findElement(element).sendKeys(textToBeFilled);
+			el.sendKeys(textToBeFilled);
 			ExtentListeners.insertScreenshotIntoReport();
 			LogUtils.reportPass("Filled in : " + element.toString());
-		} catch (Exception e)
+		}
+		catch (StaleElementReferenceException e) 
+		{
+			StaleElementUtils.refreshElement(el);
+			LogUtils.log.get().info("Element got staled. Refreshing the element : " + element);
+			el.sendKeys(textToBeFilled);
+		}
+		catch (Exception e)
 		{
 			//System.out.println("Unable to fill in : "+element);
 			LogUtils.log.get().error("Unable to fill in : " + element);
@@ -64,7 +82,8 @@ public class ElementUtils extends PageFactory
 			sel.selectByVisibleText(textToBeSelected);
 			ExtentListeners.insertScreenshotIntoReport();
 			LogUtils.reportPass("Selected : " + element.toString());
-		} catch (Exception e)
+		} 
+		catch (Exception e)
 		{
 			//System.out.println("Unable to select : "+element);
 			LogUtils.log.get().error("Unable to select : " + element);
@@ -80,7 +99,8 @@ public class ElementUtils extends PageFactory
 		try
 		{
 			el = DriverManager.getDriver().findElement(element);
-		} catch (Exception e)
+		} 
+		catch (Exception e)
 		{
 			el = null;
 		}
@@ -94,7 +114,8 @@ public class ElementUtils extends PageFactory
 		try
 		{
 			el = DriverManager.getDriver().findElements(element);
-		} catch (Exception e)
+		} 
+		catch (Exception e)
 		{
 			el = null;
 		}
