@@ -18,4 +18,13 @@ public class GoogleTest extends DemoBaseTest
 		demoPage.verifyTest1();
 		LogUtils.reportInfo(DriverManager.getDriver().getCurrentUrl());
 	}
+	
+	@Test
+	public void DefaultTest2()
+	{		
+		GooglePage demoPage = pageFactory.getPageObject(GooglePage.class);
+		demoPage. googleTest();
+		demoPage.verifyTest1();
+		LogUtils.reportInfo(DriverManager.getDriver().getCurrentUrl());
+	}
 }

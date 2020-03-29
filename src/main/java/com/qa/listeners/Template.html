@@ -1,9 +1,10 @@
 <body>
 
-	<th><b><p>Test Execution Summary:</p></b></th>
+	<th><b><p>Test Execution Summary On : $TestNG_Custom_Report_Title$</p></b></th>
 	<table  border="1">
       <tr><left><b><p>$Test_Execution_Details$</p></b></left></tr>
       <thead>
+      	 
         <tr>
           <th>Test Suite Name</th>
           <th># Total Methods</th>
@@ -14,8 +15,8 @@
        </thead> 
     </table>
 
+	<th><b><p>Test Class Details:</p></b></th>
     <table  border="1">
-      <tr><left><b><p>$TestNG_Custom_Report_Title$</p></b></left></tr>
       <thead>
         <tr>
           <th>Test Class Name</th>
@@ -26,7 +27,7 @@
           <th>Browser</th>
           <th>Start Time</th>
           <th>End Time</th>
-          <th>Execute Time (mm:hh:ss:ms)</th>
+          <th>Execute Time (hh:mm:ss:ms)</th>
           <!--<th>Included Groups</th>
           <th>Excluded Groups</th>-->
         </tr>
@@ -34,7 +35,7 @@
        $Test_Case_Summary$
     </table>
       
-    <th><b><p>Test Method Details:</p></b></th>
+    <th><b><p>Failed Test Method Details:</p></b></th>
     <table border="1">
     <tr><left><b>$Test_Case_Detail$</b></left></tr> 
       <thead >

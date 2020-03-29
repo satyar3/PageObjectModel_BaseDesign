@@ -7,10 +7,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 
 import org.testng.IReporter;
 import org.testng.IResultMap;
@@ -41,7 +44,8 @@ public class CustomTestNGReporter implements IReporter, ISuiteListener
 			String customReportTemplateStr = this.readEmailabelReportTemplate();			
 			
 			// Create custom report title.
-			String customReportTitle = this.getCustomReportTitle(suiteName);
+			//String customReportTitle = this.getCustomReportTitle(suiteName);
+			String customReportTitle = this.getCustomReportTitle("");
 			
 			// Create test suite summary data.
 			String customSuiteSummary = this.getTestSuiteSummary(suites);
@@ -114,7 +118,10 @@ public class CustomTestNGReporter implements IReporter, ISuiteListener
 	private String getCustomReportTitle(String title)
 	{
 		StringBuffer retBuf = new StringBuffer();
-		retBuf.append(title + " " + this.getDateInStringFormat(new Date()));
+		Calendar now = Calendar.getInstance();
+		TimeZone timeZone = now.getTimeZone();
+		//System.out.println("Current TimeZone is : " + timeZone.getDisplayName());
+		retBuf.append(title + " " + this.getDateInStringFormat(new Date())+" ("+timeZone.getDisplayName()+")");
 		return retBuf.toString();
 	}
 
@@ -420,51 +427,52 @@ public class CustomTestNGReporter implements IReporter, ISuiteListener
 				testStatus = "PASS";
 
 			//retStrBuf.append("<tr bgcolor=" + color + ">");
-
-			/* Add test class name. */
-			retStrBuf.append("<td>");
-			retStrBuf.append(testClassName);
-			retStrBuf.append("</td>");
-
-			/* Add test method name. */
-			retStrBuf.append("<td>");
-			retStrBuf.append(testMethodName);
-			retStrBuf.append("</td>");
-
-			/* Add start time. */
-			retStrBuf.append("<td>");
-			retStrBuf.append(startDateStr);
-			retStrBuf.append("</td>");
-
-			/* Add execution time. */
-			retStrBuf.append("<td>");
-			retStrBuf.append(executeTimeStr);
-			retStrBuf.append("</td>");
-
-			/* Add parameter. */
-			/*retStrBuf.append("<td>");
-			retStrBuf.append(paramStr);
-			retStrBuf.append("</td>");*/
-
-			/* Add reporter message. */
-			/*retStrBuf.append("<td>");
-			retStrBuf.append(reporterMessage);
-			retStrBuf.append("</td>");*/
-
-			//Hiding Exception from html
-			/* Add exception message. 
-			retStrBuf.append("<td>");
-			retStrBuf.append(exceptionMessage);
-			retStrBuf.append("</td>");*/
-
-			if(color == "red")
-				retStrBuf.append("<td bgcolor=" + color + ">");
-			else
+			if(testStatus != "PASS")
+			{
+				/* Add test class name. */
 				retStrBuf.append("<td>");
-			
-			retStrBuf.append(testStatus);
-			retStrBuf.append("</td>");
-						
+				retStrBuf.append(testClassName);
+				retStrBuf.append("</td>");
+
+				/* Add test method name. */
+				retStrBuf.append("<td>");
+				retStrBuf.append(testMethodName);
+				retStrBuf.append("</td>");
+
+				/* Add start time. */
+				retStrBuf.append("<td>");
+				retStrBuf.append(startDateStr);
+				retStrBuf.append("</td>");
+
+				/* Add execution time. */
+				retStrBuf.append("<td>");
+				retStrBuf.append(executeTimeStr);
+				retStrBuf.append("</td>");
+
+				/* Add parameter. */
+				/*retStrBuf.append("<td>");
+				retStrBuf.append(paramStr);
+				retStrBuf.append("</td>");*/
+
+				/* Add reporter message. */
+				/*retStrBuf.append("<td>");
+				retStrBuf.append(reporterMessage);
+				retStrBuf.append("</td>");*/
+
+				//Hiding Exception from html
+				/* Add exception message. 
+				retStrBuf.append("<td>");
+				retStrBuf.append(exceptionMessage);
+				retStrBuf.append("</td>");*/
+
+				if (color == "red")
+					retStrBuf.append("<td bgcolor=" + color + ">");
+				else
+					retStrBuf.append("<td>");
+
+				retStrBuf.append(testStatus);
+				retStrBuf.append("</td>");
+			}
 			retStrBuf.append("</tr>");
 
 		}
