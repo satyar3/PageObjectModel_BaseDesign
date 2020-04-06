@@ -58,7 +58,7 @@ public class ExtentManager extends PageFactory
 		Date d = new Date();
 		screenshotName = d.toString().replace(":", "_").replace(" ", "_") + ".png";
 		screenshotFullPath.set(System.getProperty("user.dir") + "\\Screenshots\\" + ExtentListeners.className.get() + "\\"
-				+ "\\" + ExtentListeners.testName + "\\" + screenshotName);
+				+ "\\" + ExtentListeners.testName.get() + "\\" + screenshotName);
 
 		try
 		{

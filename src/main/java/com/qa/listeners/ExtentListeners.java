@@ -40,7 +40,7 @@ public class ExtentListeners implements ITestListener, IInvokedMethodListener
 	//public static boolean STATUS_ASSERTION_FAIL = false;
 	public static ThreadLocal<Boolean> STATUS_ASSERTION_FAIL = new ThreadLocal<Boolean>();
 	public static ThreadLocal<String> className = new ThreadLocal<String>();
-	public static String testName = "";
+	public static ThreadLocal<String> testName = new ThreadLocal<String>();
 	public String testId = "";
 	public Object testClass = new Object();
 
@@ -159,8 +159,9 @@ public class ExtentListeners implements ITestListener, IInvokedMethodListener
 		{
 			softAssert.set(new SoftAssert());
 			ExtentListeners.STATUS_ASSERTION_FAIL.set(false);
-			className.set(testResult.getTestClass().getName());
-			testName = method.getTestMethod().getMethodName();
+			//className.set(testResult.getTestClass().getName());
+			className.set(testResult.getTestClass().getRealClass().getSimpleName());
+			testName.set(method.getTestMethod().getMethodName());
 			testClass = testResult.getInstance();
 		}
 	}

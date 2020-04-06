@@ -24,10 +24,11 @@ public class ElementUtils extends PageFactory
 	public static void clickOrFail(By element, String failMessage)
 	{
 		ExtentListeners.insertScreenshotIntoReport();		
-		WebElement el = DriverManager.getDriver().findElement(element);
+		WebElement el = null;
 		
 		try
-		{			
+		{		
+			el = DriverManager.getDriver().findElement(element);
 			el.click();
 			LogUtils.reportPass("Clicked on : " + element.toString());
 		}
@@ -50,9 +51,10 @@ public class ElementUtils extends PageFactory
 
 	public static void sendKeyOrFail(By element, String failMessage, String... textToBeFilled)
 	{
-		WebElement el = DriverManager.getDriver().findElement(element);
+		WebElement el = null;
 		try
 		{
+			el = DriverManager.getDriver().findElement(element);
 			el.sendKeys(textToBeFilled);
 			ExtentListeners.insertScreenshotIntoReport();
 			LogUtils.reportPass("Filled in : " + element.toString());

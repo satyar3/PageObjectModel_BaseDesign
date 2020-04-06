@@ -13,6 +13,7 @@ public class GoogleTest extends DemoBaseTest
 	@Test
 	public void DefaultTest()
 	{		
+		DriverManager.getDriver().get("https://www.google.com");
 		GooglePage demoPage = pageFactory.getPageObject(GooglePage.class);
 		demoPage. googleTest();
 		demoPage.verifyTest1();
@@ -22,6 +23,7 @@ public class GoogleTest extends DemoBaseTest
 	@Test
 	public void DefaultTest2()
 	{		
+		DriverManager.getDriver().get("https://www.google.com");
 		GooglePage demoPage = pageFactory.getPageObject(GooglePage.class);
 		demoPage. googleTest();
 		demoPage.verifyTest1();
