@@ -1,8 +1,8 @@
-package com.qa.drivermanager;
+package com.qa.driverfactory;
 
 import org.openqa.selenium.WebDriver;
 
-public class DriverManager
+public class DriverFactory
 {
 	protected WebDriver driver;
 	public static ThreadLocal<WebDriver> dr = new ThreadLocal<WebDriver>();

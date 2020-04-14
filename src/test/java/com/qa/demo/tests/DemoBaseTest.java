@@ -10,7 +10,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 
-import com.qa.drivermanager.DriverManager;
+import com.qa.driverfactory.DriverFactory;
 import com.qa.factory.PageFactory;
 import com.qa.factory.TestFactory;
 import com.qa.utils.FileUtility;
@@ -34,7 +34,7 @@ public class DemoBaseTest extends TestFactory
 	@BeforeTest
 	public void setUp()
 	{
-		if (DriverManager.getDriver() == null)
+		if (DriverFactory.getDriver() == null)
 		{
 			try
 			{
@@ -55,8 +55,8 @@ public class DemoBaseTest extends TestFactory
 			}
 
 			pageFactory = new PageFactory(driver);
-			DriverManager.setDriver(driver);
-			DriverManager.getDriver().get("https://google.com");
+			DriverFactory.setDriver(driver);
+			DriverFactory.getDriver().get("https://google.com");
 
 		} else
 		{
@@ -68,8 +68,8 @@ public class DemoBaseTest extends TestFactory
 	@AfterTest
 	public void tearDown()
 	{
-		DriverManager.getDriver().quit();
-		DriverManager.setDriver(null);
+		DriverFactory.getDriver().quit();
+		DriverFactory.setDriver(null);
 	}	
 	
 	@BeforeSuite

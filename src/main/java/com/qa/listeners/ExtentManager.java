@@ -13,7 +13,7 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
-import com.qa.drivermanager.DriverManager;
+import com.qa.driverfactory.DriverFactory;
 import com.qa.factory.PageFactory;
 
 public class ExtentManager extends PageFactory
@@ -53,7 +53,7 @@ public class ExtentManager extends PageFactory
 	public static void captureScreenshot()
 	{
 
-		File scrFile = ((TakesScreenshot) DriverManager.getDriver()).getScreenshotAs(OutputType.FILE);
+		File scrFile = ((TakesScreenshot) DriverFactory.getDriver()).getScreenshotAs(OutputType.FILE);
 
 		Date d = new Date();
 		screenshotName = d.toString().replace(":", "_").replace(" ", "_") + ".png";

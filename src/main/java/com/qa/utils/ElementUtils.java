@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-import com.qa.drivermanager.DriverManager;
+import com.qa.driverfactory.DriverFactory;
 import com.qa.factory.PageFactory;
 import com.qa.listeners.ExtentListeners;
 
@@ -28,7 +28,7 @@ public class ElementUtils extends PageFactory
 		
 		try
 		{		
-			el = DriverManager.getDriver().findElement(element);
+			el = DriverFactory.getDriver().findElement(element);
 			el.click();
 			LogUtils.reportPass("Clicked on : " + element.toString());
 		}
@@ -54,7 +54,7 @@ public class ElementUtils extends PageFactory
 		WebElement el = null;
 		try
 		{
-			el = DriverManager.getDriver().findElement(element);
+			el = DriverFactory.getDriver().findElement(element);
 			el.sendKeys(textToBeFilled);
 			ExtentListeners.insertScreenshotIntoReport();
 			LogUtils.reportPass("Filled in : " + element.toString());
@@ -79,7 +79,7 @@ public class ElementUtils extends PageFactory
 	{
 		try
 		{
-			WebElement el = DriverManager.getDriver().findElement(element);
+			WebElement el = DriverFactory.getDriver().findElement(element);
 			sel = new Select(el);
 			sel.selectByVisibleText(textToBeSelected);
 			ExtentListeners.insertScreenshotIntoReport();
@@ -100,7 +100,7 @@ public class ElementUtils extends PageFactory
 		WebElement el = null;
 		try
 		{
-			el = DriverManager.getDriver().findElement(element);
+			el = DriverFactory.getDriver().findElement(element);
 		} 
 		catch (Exception e)
 		{
@@ -115,7 +115,7 @@ public class ElementUtils extends PageFactory
 		List<WebElement> el = null;
 		try
 		{
-			el = DriverManager.getDriver().findElements(element);
+			el = DriverFactory.getDriver().findElements(element);
 		} 
 		catch (Exception e)
 		{

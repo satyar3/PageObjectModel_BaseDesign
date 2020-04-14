@@ -6,12 +6,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.qa.drivermanager.DriverManager;
+import com.qa.driverfactory.DriverFactory;
 
 public class WaitUtils
 {
 
-	public static WebDriver driver = DriverManager.getDriver();
+	public static WebDriver driver = DriverFactory.getDriver();
 
 	public static boolean WaitForElementPresent(By elt, int timeOutInSeconds)
 	{

@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 
-import com.qa.drivermanager.DriverManager;
+import com.qa.driverfactory.DriverFactory;
 
 
 public class StaleElementUtils {
@@ -27,7 +27,7 @@ public class StaleElementUtils {
                 if(leftBracketsCount-rightBracketscount==1)
                     value = value + "]";
                 if(lastObject==null){
-                    lastObject = DriverManager.getDriver();
+                    lastObject = DriverFactory.getDriver();
                 }else{
                     lastObject = getWebElement(lastObject, key, value);
                 }
