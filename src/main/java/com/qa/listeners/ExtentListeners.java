@@ -100,10 +100,15 @@ public class ExtentListeners implements ITestListener, IInvokedMethodListener
 
 	public void onTestSkipped(ITestResult result)
 	{
+		ExtentTest test = extent
+				.createTest(result.getTestClass().getName() + "     @TestCase : " + result.getMethod().getMethodName());
+		testReport.set(test);
 		String methodName = result.getMethod().getMethodName();
 		String logText = "<b>" + "Test Case:- " + methodName + " Skipped" + "</b>";
 		Markup m = MarkupHelper.createLabel(logText, ExtentColor.YELLOW);
-		testReport.get().skip(m);
+		//testReport.get().skip(m);
+		//testReport.get().log(Status.SKIP, m);
+		testReport.get().log(Status.SKIP, result.getThrowable());
 		LogUtils.log.get().info("Skipped @Class : " + result.getTestClass().getName() + " @TestCase : "
 				+ result.getMethod().getMethodName());
 		LogUtils.log.get().error("***************************Test Skipped******************************");

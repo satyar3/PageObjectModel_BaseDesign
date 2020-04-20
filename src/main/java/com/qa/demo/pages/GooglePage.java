@@ -13,7 +13,7 @@ public class GooglePage extends DemoBasePage
 		super(driver);
 	}
 
-	private static By googleSearchBox = By.name("q1");
+	private static By googleSearchBox = By.name("q");
 	private static By googleSearch1stResult = By.cssSelector(".erkvQe li:first-child span");
 	
 	private static By yahooSearchBox = By.cssSelector("#header-search-form #header-search-input");

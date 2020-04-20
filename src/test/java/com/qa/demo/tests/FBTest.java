@@ -10,13 +10,23 @@ import com.qa.utils.LogUtils;
 @Listeners(com.qa.listeners.ExtentListeners.class)
 public class FBTest extends DemoBaseTest
 {
-	@Test
-	public void FBTest()
+	@Test(dependsOnMethods="FBTest2")
+	public void FBTest1()
 	{
 		DriverFactory.getDriver().get("https://www.facebook.com");
 		FBPage demoPage = pageFactory.getPageObject(FBPage.class);
 		demoPage. faceBookTest();
 		demoPage.verifyTest3();
+		LogUtils.reportInfo(DriverFactory.getDriver().getCurrentUrl());
+	}
+	
+	@Test
+	public void FBTest2()
+	{
+		DriverFactory.getDriver().get("https://www.facebook.com");
+		FBPage demoPage = pageFactory.getPageObject(FBPage.class);
+		demoPage. faceBookTest();
+		demoPage.verifyTest1();
 		LogUtils.reportInfo(DriverFactory.getDriver().getCurrentUrl());
 	}
 }
