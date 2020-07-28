@@ -12,7 +12,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<selenium.version>3.141.59</selenium.version>
+		<selenium.version>4.0.0-alpha-6</selenium.version>
 		<testNG.version>6.9.6</testNG.version>
 		<extentreport.version>3.1.5</extentreport.version>
 		<log4j.version>1.2.17</log4j.version>
@@ -50,6 +50,11 @@
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
+			<version>${selenium.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-api</artifactId>
 			<version>${selenium.version}</version>
 		</dependency>
 		<dependency>
@@ -99,5 +104,6 @@
 			<artifactId>log4j</artifactId>
 			<version>${log4j.version}</version>
 		</dependency>
+		
 	</dependencies>
 </project>
